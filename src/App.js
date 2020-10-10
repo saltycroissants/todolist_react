@@ -1,23 +1,26 @@
 import React from 'react';
 import './App.css';
 import Todos from './components/Todos'; 
+import Header from './components/layout/Header';
+import AddTodo from './components/AddTodo';
+import {v4 as uuid} from "uuid"; 
 
 class App extends React.Component {
   
   state ={
     todos:[
         {
-            id : 1,
+            id : uuid(),
             title : "투두리스트 만들기",
             isCompleted : false
         },
         {
-            id : 2,
+            id : uuid(),
             title : "화면 만들기",
             isCompleted : false
         },
         {
-            id : 3,
+            id : uuid(),
             title : "밥먹기",
             isCompleted : false
         }
@@ -44,13 +47,26 @@ class App extends React.Component {
       todo.id !== id)] });
   }
 
+  addTodo = (title) => {
+    console.log(title);
+    const newTodo ={
+      id : uuid(),
+      title : title,
+      isCompleted :false
+    }
+    this.setState({ todos : [...this.state.todos, newTodo]})
+  }
+
   render(){
     return (
         <div className="App">
-        <h1>이 지독한 투두..</h1>
-        <Todos todos = {this.state.todos} markComplete ={this.markComplete}
-        delTodo = {this.delTodo} 
+          <div className="container">
+            <Header />
+            <AddTodo addTodo = {this.addTodo} />
+            <Todos todos = {this.state.todos} markComplete ={this.markComplete}
+            delTodo = {this.delTodo} 
         />
+          </div>
         </div>
     );
   }
